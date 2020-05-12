@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.PyDataDao" >
+    <sql id="BASE_TABLE">
+    py_data
+  </sql>
+
+    <sql id="BASE_COLUMN">
+    Name,Ztream,Ktream,odd,time,Zgrade,Kgrade,createTime,Bigodd,smodd,matchId
+  </sql>
+
+
+
+    <select id="selectUsers" resultType="com.example.demo.entity.PyData">
+        SELECT
+        *
+        FROM
+       bet_365_data
+    </select>
+
+    <select id="selectAllDateByDate" parameterType="java.util.Map" resultType="com.example.demo.entity.PyData">
+        SELECT * FROM
+       bet_365_data p
+       where 1=1 and p.createTime >=  #{date} order by p.createTime desc
+    </select>
+
+
+    <select id="selectAllDateByMatchId" parameterType="java.util.Map" resultType="com.example.demo.entity.PyData">
+        SELECT
+         p.title as title ,
+         p.zTream as zTream,
+         p.kTream as kTream,
+         p.bigOddName as bigOddName,
+         p.Zgrade as zgrade,
+         p.kgrade as kgrade,
+         p.bigOdds as bigOdds,
+         p.smOdds as smOdds,
+         p.MatchTime as matchTime,
+         p.createTime as createTime
+         FROM
+       bet_365_data p
+       where 1=1 and p.zTream =  #{zTream}  and p.kTream = #{kTream} and p.createTime = #{createTime} order by p.matchTime asc
+    </select>
+
+
+    <select id="selectAllMatchId" parameterType="java.util.Map" resultType="com.example.demo.entity.PyData">
+        SELECT p.zTream as Ztream, p.kTream as kTream ,p.createTime as createTime  FROM
+       bet_365_data p
+       where 1=1 and p.createTime >=  #{date} group by  p.zTream,p.kTream,p.createTime
+    </select>
+
+
+    <insert id="addPydateSuccess" parameterType="com.example.demo.entity.PyData">
+        insert into bet_365_data_result
+
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="Ztream != null">
+                Ztream,
+            </if>
+            <if test="Ktream != null">
+                Ktream,
+            </if>
+            <if test="odd != null">
+                odd,
+            </if>
+
+            <if test="Zgrade != null">
+                Zgrade,
+            </if>
+            <if test="Kgrade != null">
+                Kgrade,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="bigOdds != null">
+                bigOdds,
+            </if>
+            <if test="smOdds != null">
+                smOdds,
+            </if>
+            <if test="matchTime != null">
+                matchTime,
+            </if>
+
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="Ztream != null">
+                #{Ztream,jdbcType=VARCHAR},
+            </if>
+            <if test="Ktream != null">
+                #{Ktream,jdbcType=VARCHAR},
+            </if>
+            <if test="odd != null">
+                #{odd,jdbcType=VARCHAR},
+            </if>
+
+            <if test="Zgrade != null">
+                #{Zgrade,jdbcType=VARCHAR},
+            </if>
+            <if test="Kgrade != null">
+                #{Kgrade,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bigOdds != null">
+                #{bigOdds,jdbcType=VARCHAR},
+            </if>
+            <if test="smOdds != null">
+                #{smOdds,jdbcType=VARCHAR},
+            </if>
+
+            <if test="matchTime != null">
+                #{matchTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="selectRestulData" parameterType="java.util.Map" resultType="com.example.demo.entity.PyData">
+        SELECT   p.title as title ,
+         p.zTream as zTream,
+         p.kTream as kTream,
+         p.bigOddName as bigOddName,
+         p.Zgrade as zgrade,
+         p.kgrade as kgrade,
+         p.bigOdds as bigOdds,
+         p.smOdds as smOdds,
+         p.MatchTime as matchTime,
+         p.createTime as createTime FROM
+       bet_result_data p
+       where 1=1 and p.kTream =  #{kTream,jdbcType=VARCHAR} and p.zTream =  #{zTream,jdbcType=VARCHAR} order by p.createTime asc
+    </select>
+
+    <insert id="add" parameterType="com.example.demo.entity.PyData">
+        insert into bet_result_data
+
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="Ztream != null">
+                Ztream,
+            </if>
+            <if test="Ktream != null">
+                Ktream,
+            </if>
+            <if test="odd != null">
+                odd,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="Zgrade != null">
+                Zgrade,
+            </if>
+            <if test="Kgrade != null">
+                Kgrade,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="bigOdds != null">
+                bigOddName,
+            </if>
+            <if test="smOdds != null">
+                bigOdds,
+            </if>
+
+            <if test="matchTime != null">
+                matchTime,
+            </if>
+
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="Ztream != null">
+                #{Ztream,jdbcType=VARCHAR},
+            </if>
+            <if test="Ktream != null">
+                #{Ktream,jdbcType=VARCHAR},
+            </if>
+            <if test="odd != null">
+                #{odd,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=VARCHAR},
+            </if>
+            <if test="Zgrade != null">
+                #{Zgrade,jdbcType=VARCHAR},
+            </if>
+            <if test="Kgrade != null">
+                #{Kgrade,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bigOdds != null">
+                #{bigOdds,jdbcType=VARCHAR},
+            </if>
+            <if test="smOdds != null">
+                #{smOdds,jdbcType=VARCHAR},
+            </if>
+
+            <if test="matchTime != null">
+                #{matchTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findMatchByTime" parameterType="java.util.Map" resultType="com.example.demo.entity.PyData">
+      SELECT
+         p.title as title ,
+         p.zTream as zTream,
+         p.kTream as kTream,
+         p.bigOddName as bigOddName,
+         p.Zgrade as zgrade,
+         p.kgrade as kgrade,
+         p.bigOdds as bigOdds,
+         p.smOdds as smOdds,
+         p.MatchTime as matchTime,
+         p.createTime as createTime
+        FROM bet_365_data p where 1=1 and p.createTime >   #{date} and p.matchTime > '70:00' and p.matchTime &lt; '85:00' and p.matchTime != ' '  order by p.createTime desc
+    </select>
+
+
+    <select id="selectRestulDataByStatus" parameterType="java.util.Map" resultType="com.example.demo.entity.PyResData">
+          SELECT  * FROM bet_result_data p where 1=1 and p.status is NULL;
+    </select>
+
+
+    <select id="findResByMatchId" parameterType="java.util.Map" resultType="com.example.demo.entity.PyData">
+     select   p.title as title ,
+         p.zTream as zTream,
+         p.kTream as kTream,
+         p.bigOddName as bigOddName,
+         p.Zgrade as zgrade,
+         p.kgrade as kgrade,
+         p.bigOdds as bigOdds,
+         p.smOdds as smOdds,
+         p.MatchTime as matchTime,
+         p.createTime as createTime
+
+          from bet_365_data p where 1=1 and p.zTream =  #{zTream}  and p.kTream = #{kTream} ORDER BY p.createTime desc;
+    </select>
+
+
+    <update id="updataResData" parameterType="java.util.Map" >
+        update bet_result_data  set status = #{status} ,money = #{monery}
+        where  zTream =  #{zTream}  and kTream = #{kTream}
+    </update>
+
+    <insert id="adduserRest" parameterType="com.example.demo.entity.PyData">
+        insert into lz_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="iphone != null">
+                iphone,
+            </if>
+            <if test="title != null">
+                city,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="iphone != null">
+                #{iphone,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+    </insert>
+
+
+</mapper>
